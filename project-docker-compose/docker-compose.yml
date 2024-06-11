@@ -1,0 +1,54 @@
+version: "3.8"
+
+name: project-my-compose
+
+services:
+  app:
+    container_name: gosvc_container
+    environment:
+      - DB_HOST=${DB_HOST}
+      - DB_USER=${DB_USER}
+      - DB_PASS=${DB_PASS}
+      - DB_NAME=${DB_NAME}
+      - DB_PORT=${DB_PORT}
+    env_file:
+      - .env
+    build:
+      context: ./go-sample_postgree
+      dockerfile: dockerfile
+    ports:
+      - 4331:77
+    networks:
+      - net_mycompose_zul
+    depends_on:
+      postgresdb:
+        condition: service_healthy
+
+  postgresdb:
+    image: postgres:latest
+    container_name: dbsvc_container
+    environment:
+      - POSTGRES_HOST=${DB_HOST}
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASS}
+      - POSTGRES_NAME=${DB_NAME}
+    env_file:
+      - .env
+    ports:
+      - "5432:5432"
+    volumes:
+      - vol_mycompose_zul:/var/lib/postgresql/data
+    networks:
+      - net_mycompose_zul
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  vol_mycompose_zul:
+
+networks:
+  net_mycompose_zul:
+    driver: bridge
