@@ -22,6 +22,7 @@
 
 Kloning repositori `my-go-app` ke direktori lokal Anda:
 
+<<<<<<< HEAD:project-my-dockerfile/README.md
 ![golang version](././imageSS/golang121.png)
 
 ### 2. File golang untuk mencetak di html dan console"
@@ -52,6 +53,11 @@ func main() {
 	log.Fatal(app.Listen(":77"))
 
 }
+=======
+```bash
+git clone [https://github.com/username/my-go-app.git](https://github.com/zul1996/learning-docker.git)
+cd learning-docker
+>>>>>>> 90a9393bbdb464e658e2e3ef550d3005b4f1cfe5:project-my-dockerfile/Readme.md
 ```
 
 ### 3. Buat Dockerfile "
