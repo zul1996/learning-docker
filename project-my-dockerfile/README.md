@@ -23,8 +23,8 @@
 Kloning repositori `my-go-app` ke direktori lokal Anda:
 
 ```bash
-git clone https://github.com/username/my-go-app.git
-cd my-go-app
+git clone [https://github.com/username/my-go-app.git](https://github.com/zul1996/learning-docker.git)
+cd learning-docker
 ```
 
 ### 2. Buat Dockerfile image dengan Nama "my-go-app-v2"
