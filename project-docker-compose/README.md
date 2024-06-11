@@ -11,11 +11,11 @@ project-docker-compose/
 ├── docker-compose.yml
 │
 └── go-sample_postgree/
-│
-├── dockerfile
-├── go.mod
-├── go.sum
-└── main.go
+	│
+	├── dockerfile
+	├── go.mod
+	├── go.sum
+	└── main.go
 ```
 
 ## Prasyarat
