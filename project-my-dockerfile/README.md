@@ -18,16 +18,77 @@
 
 ## Langkah-langkah
 
-### 1. Kloning Repositori
+### 1. Sama kan versi Golang 1.21
 
 Kloning repositori `my-go-app` ke direktori lokal Anda:
 
-```bash
-git clone https://github.com/username/my-go-app.git
-cd my-go-app
+![golang version](././imageSS/golang121.png)
+
+### 2. File golang untuk mencetak di html dan console"
+
+Setting konfigurasi port menjadi 77
+
+Hasilnya akan terlihat seperti ini:
+
+```go
+package main
+
+import (
+	"fmt"
+	"log"
+
+	"github.com/gofiber/fiber/v3"
+)
+
+func main() {
+
+	app := fiber.New()
+
+	app.Get("/", func(c fiber.Ctx) error {
+		fmt.Println("Ouch ")
+		return c.SendString("The true measure of a shinobi is not how he lives, but how he dies. - Jiraiya👋!")
+	})
+
+	log.Fatal(app.Listen(":77"))
+
+}
 ```
 
-### 2. Buat Dockerfile image dengan Nama "my-go-app-v2"
+### 3. Buat Dockerfile "
+
+Buat Dockerfile dengan konfigurasi dibawah ini menggunakan versi 1.21 expose target 77 dan image akan diberi nama my-go-app
+
+```bash
+
+FROM golang:1.21
+
+# Set destination for COPY
+WORKDIR /myapp
+
+RUN go version
+
+# Copy go.mod and execute to download Go modules
+COPY go.mod go.sum ./
+RUN go mod download
+
+COPY authors.md ./
+
+
+COPY links.md ./
+
+COPY *.go ./
+
+# Build
+RUN CGO_ENABLED=0 GOOS=linux go build -o /my-go-app
+
+
+EXPOSE 77
+
+# Run
+CMD [ "/my-go-app" ]
+```
+
+### 4. Buat Dockerfile image dengan Nama "my-go-app-v2"
 
 ```bash
 docker build -t my-go-app:v2 .
@@ -40,7 +101,7 @@ docker build -t my-go-app:v2 .
 Setelah image Docker berhasil dibangun, Anda dapat menjalankan container dari image tersebut di latar belakang dan memetakan port 8080:
 
 ```bash
-docker run -d --name my-go-app-container -p 5555:5555 my-go-app:v2
+docker run -d --name go-app -p 5555:77 my-go-app:v2
 
 ```
 
@@ -48,7 +109,7 @@ docker run -d --name my-go-app-container -p 5555:5555 my-go-app:v2
 
 ### 4. Cek Running Program n logs
 
-Buka browser dan akses localhost:55555
+Buka browser dan akses localhost:5555
 
 ![Running FIle Golang](././imageSS/localhost%205555.png)
 
@@ -61,7 +122,11 @@ melihat atau edit file di container sangat tidak direkomendasikan,, kita berikan
 ```
 
 ```bash
- docker exec -it go-app cat ./main.go
+ docker exec -it go-app cat ./AUTHORS.md
+```
+
+```bash
+ docker exec -it go-app cat ./LINKS.md
 ```
 
 ![Running FIle Golang](././imageSS/see%20log%20and%20cats.png)
