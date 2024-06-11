@@ -1,18 +1,15 @@
 package main
 
 import (
-	"context"
+	"database/sql"
 	"fmt"
 	"log"
 	"os"
-	"time"
 
 	"github.com/gofiber/fiber/v3"
-	"github.com/jackc/pgx/v5/pgxpool"
 	_ "github.com/lib/pq"
 )
 
-var dbpool *pgxpool.Pool
 
 func main() {
 	// Membaca variabel lingkungan
@@ -26,15 +23,12 @@ func main() {
 	connStr := fmt.Sprintf("postgres://%s:%s@%s:%s/%s?sslmode=disable",
 		dbUser, dbPassword, dbHost, dbPort, dbName)
 
-	// Membuat pool koneksi
-	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
-	defer cancel()
-	var err error
-	dbpool, err = pgxpool.New(ctx, connStr)
+	fmt.Println(connStr)
+
+	db, err := sql.Open("postgres",connStr)
 	if err != nil {
-		log.Fatalf("Tidak dapat membuat pool koneksi: %v\n", err)
+		fmt.Println("Connect db failed")
 	}
-	defer dbpool.Close()
 
 	// Membuat aplikasi Fiber
 	app := fiber.New()
@@ -47,8 +41,7 @@ func main() {
 
 	// Rute untuk "/ping"
 	app.Get("/ping", func(c fiber.Ctx) error {
-		
-		if err != nil {
+		if err := db.Ping(); err != nil {
 			log.Printf("Gagal mendapatkan koneksi: %v\n", err)
 			return c.SendString("Connection to database failed")
 		}

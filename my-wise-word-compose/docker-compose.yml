@@ -21,10 +21,10 @@ services:
     networks:
       - netwwc
     depends_on:
-      postgreedb:
+      postgresdb:
         condition: service_healthy
 
-  postgreedb:
+  postgresdb:
     image: postgres:latest
     container_name: database
     environment:
