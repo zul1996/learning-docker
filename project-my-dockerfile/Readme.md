@@ -1,4 +1,4 @@
-# My Go App
+# [Saweria](https://saweria.co/zoel96) - Panduan Dasar Dockerfile My Go App
 
 ## Deskripsi
 
