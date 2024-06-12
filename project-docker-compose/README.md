@@ -1,4 +1,4 @@
-# Dokumentasi Docker Compose
+# [Saweria](https://saweria.co/zoel96) - Panduan Dasar Docker Compose
 
 Proyek ini menggunakan Docker Compose untuk mengelola layanan yang diperlukan untuk menjalankan aplikasi Go dengan database PostgreSQL. Berikut adalah struktur folder dan instruksi penggunaan:
 
