@@ -1,4 +1,4 @@
-# learning-docker
+# [Saweria](https://saweria.co/zoel96) - Panduan Dasar Docker
 
 Jika merasa panduan ini bermanfaat, Anda dapat mendukung kami melalui [Saweria](https://saweria.co/zoel96). Terima kasih!
 
